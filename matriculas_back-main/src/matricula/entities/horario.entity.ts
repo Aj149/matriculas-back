@@ -32,7 +32,7 @@ export class HorarioEntity {
   @Column('varchar', { length: 50, nullable: true })
   modalidad: Modalidad; 
   
-  @Column('int')
+  @Column('int', { nullable:true})
   precio: number;
 
 
