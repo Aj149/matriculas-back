@@ -32,8 +32,8 @@ export class HorarioEntity {
   @Column('varchar', { length: 50, nullable: true })
   modalidad: Modalidad; 
   
-  @Column('int', { nullable:true})
-  precio: number;
+  @Column('decimal', { precision: 10, scale: 2, nullable: true })
+  precio: number | null;
 
 
   @CreateDateColumn({

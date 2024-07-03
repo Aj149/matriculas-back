@@ -133,6 +133,7 @@ export class HorarioService {
               dia: updateHorarioDto.dia,
               horaInicio: updateHorarioDto.horaInicio,
               horaSalida: updateHorarioDto.horaSalida,
+              precio: updateHorarioDto.precio,
               modalidad: Modalidad.Virtual,
             },
           });
@@ -185,6 +186,7 @@ if (updateHorarioDto.modalidad === Modalidad.Presencial) {
         existingHorario.dia = updateHorarioDto.dia;
         existingHorario.horaInicio = updateHorarioDto.horaInicio;
         existingHorario.horaSalida = updateHorarioDto.horaSalida;
+        existingHorario.precio = updateHorarioDto.precio;
         existingHorario.modalidad = updateHorarioDto.modalidad;
       
         if (updateHorarioDto.modalidad === Modalidad.Presencial) {

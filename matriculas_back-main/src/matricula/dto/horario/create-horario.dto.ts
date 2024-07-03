@@ -17,8 +17,8 @@ export class CreateHorarioDto {
     @IsEnum(Modalidad, { message: 'la modalidad sólo puede ser presencial o virtual' })
     modalidad?: Modalidad;
     
-    @IsNumber()
-    precio: number;
+    @IsNumber({}, { message: 'El precio debe ser un número' })
+    precio: number | null;
 
     @IsNumber()
     @IsOptional()
