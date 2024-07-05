@@ -186,7 +186,7 @@ if (updateHorarioDto.modalidad === Modalidad.Presencial) {
         existingHorario.dia = updateHorarioDto.dia;
         existingHorario.horaInicio = updateHorarioDto.horaInicio;
         existingHorario.horaSalida = updateHorarioDto.horaSalida;
-        existingHorario.precio = updateHorarioDto.precio;
+        existingHorario.precio = updateHorarioDto.precio
         existingHorario.modalidad = updateHorarioDto.modalidad;
       
         if (updateHorarioDto.modalidad === Modalidad.Presencial) {

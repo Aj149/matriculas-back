@@ -2,6 +2,7 @@ import {
   IsNotEmpty,
   IsInt,
   ValidateNested,
+  IsString,
   
 } from 'class-validator';
 import { Type } from 'class-transformer';
@@ -25,6 +26,9 @@ export class CreateMatriculaDto {
   @IsNotEmpty({ message: 'La fechaFinal no puede estar vacía.' })
   @IsValidDate()
   fechaFinal: Date;
+
+  @IsString()
+  horario: string;
 
   @IsInt({ message: 'El id_estudiante debe ser un número entero.' })
   id_estudiante: number;

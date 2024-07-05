@@ -28,6 +28,9 @@ export class MatriculaEntity {
   @Column('date')
   fechaFinal: Date;
 
+  @Column('varchar', { length:25, nullable: true})
+  horario: string;
+
   @Column({
     name: 'is_active',
     type: 'boolean',
