@@ -37,6 +37,10 @@ export class MateriaService {
         return materia;
       }
     
+
+
+
+      
       async updateMateria(id_materia: number, updateMateriaDto: CreateMateriaDto) {
         const materia = await this.findOneMateria(id_materia);
         if (!materia) {
@@ -46,6 +50,11 @@ export class MateriaService {
         await this.materiaRepository.save(materia);
         return new MessageDto(`Materia ${materia.nombre} actualizada.`);
       }
+
+
+
+
+
     
       async removeMateria(id_materia: number) {
         const materia = await this.findOneMateria(id_materia);

@@ -8,11 +8,13 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   UpdateDateColumn,
+
 } from 'typeorm';
 import { ProgramacionEntity } from './programacion.entity';
 import { EstudianteEntity } from 'src/estudiante/entities/estudiante.entity';
 import { MateriaEntity } from './materia.entity';
 import { UsuarioEntity } from 'src/usuario/entities/usuario.entity';
+import { TurnoRotativoEntity } from './turnoRotativo.entity';
 
 @Entity('matricula', { schema: 'sistema' })
 export class MatriculaEntity {
@@ -76,6 +78,24 @@ export class MatriculaEntity {
   @JoinColumn({ name: 'profesor' })
   profesor: UsuarioEntity;
 
+  @ManyToOne(() => TurnoRotativoEntity, (turno) => turno.matriculas, {
+    eager: true,
+  })
+  @JoinColumn({ name: 'turno' })
+  turno: TurnoRotativoEntity;
+
+// 1relacion de muchos a muchos entre materias y matriculas
+
+  // @ManyToMany(() => MateriaEntity, (materia) => materia.matricula, {
+  //   eager: true,
+  // })
+  // @JoinTable({
+  //   name: 'matricula_materias',
+  //   joinColumn: { name: 'matricula_id', referencedColumnName: 'id' },
+  //   inverseJoinColumn: { name: 'materia_id', referencedColumnName: 'id' }
+  // })
+  // materias: MateriaEntity[];
+
   @ManyToOne(() => MateriaEntity, (materia) => materia.matricula, {
     eager: true,
   })
@@ -92,4 +112,5 @@ export class MatriculaEntity {
   )
   @JoinColumn({ name: 'programacion_id' })
   programacion: ProgramacionEntity;
+
 }

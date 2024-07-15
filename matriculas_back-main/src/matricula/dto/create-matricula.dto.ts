@@ -3,6 +3,7 @@ import {
   IsInt,
   ValidateNested,
   IsString,
+
   
 } from 'class-validator';
 import { Type } from 'class-transformer';
@@ -36,10 +37,18 @@ export class CreateMatriculaDto {
   @IsInt({ message: 'El id_usuario debe ser un número entero.' })
   id_usuario: number;
 
+  // @IsArray()
+  // @ArrayNotEmpty()
+  // @IsInt({each:true})
+  // materias: number[];
+
   @IsInt({ message: 'El id_materia debe ser un número entero.' })
   id_materia: number;
 
   @ValidateNested()
   @Type(() => ProgramacionDto)
   programacion: ProgramacionDto;
+
+  @IsInt( {message: 'El id_turno debe ser un número entero.'})
+  id_turno: number;
 }

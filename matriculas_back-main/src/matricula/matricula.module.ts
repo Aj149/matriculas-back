@@ -12,6 +12,8 @@ import { EstudianteEntity } from 'src/estudiante/entities/estudiante.entity';
 import { AulaService } from './services/aulas.service';
 import { HorarioService } from './services/horarios.service';
 import { MateriaService } from './services/materias.service';
+import { TurnoRotativoEntity } from './entities/turnoRotativo.entity';
+import { TurnoService } from './services/turno.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([
@@ -21,14 +23,16 @@ import { MateriaService } from './services/materias.service';
     HorarioEntity,
     AulaEntity,
     MateriaEntity,
-    EstudianteEntity
+    EstudianteEntity,
+    TurnoRotativoEntity
   ])],
   controllers: [MatriculaController],
   providers: [
     MatriculaService,
     AulaService,
     HorarioService,
-    MateriaService
+    MateriaService,
+    TurnoService
   ],
 })
 export class MatriculaModule {}

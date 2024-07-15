@@ -17,6 +17,7 @@ import { HorarioEntity } from 'src/matricula/entities/horario.entity';
 import { AddRelationshipsDto } from './dto/agregar.dto';
 import { MateriaEntity } from 'src/matricula/entities/materia.entity';
 import { EstudianteEntity } from 'src/estudiante/entities/estudiante.entity';
+import { TurnoRotativoEntity } from 'src/matricula/entities/turnoRotativo.entity';
 
 @Injectable()
 export class AuthService {
@@ -99,6 +100,7 @@ export class AuthService {
 
 async addRelationships(id_usuario: number, dto: AddRelationshipsDto) {
   const { materias, } = dto;
+  
 
   const user = await this.authRepository.findOne({ where: { id_usuario } });
 
@@ -124,7 +126,6 @@ async addRelationships(id_usuario: number, dto: AddRelationshipsDto) {
 
   return new MessageDto('Relaciones agregadas exitosamente');
 }
-
 
 
 async login(dto: LoginUsuarioDto): Promise<any> {

@@ -59,9 +59,13 @@ export class HorarioEntity {
   })
   deletedAt: Date;
 
+  // 1indica que un horario pertenece a un aula. aula es el nombre de la 
+  // 1columna que actúa como clave externa en la tabla horario.
   @ManyToOne(() => AulaEntity, (aula) => aula.horarios)
   @JoinColumn({ name: 'aula'})
   aula: AulaEntity;
+  // 1########################
+
 
   @Column({
     name: 'is_active',
@@ -71,6 +75,7 @@ export class HorarioEntity {
   })
   isActive: boolean;
 
+  // 1indicando que un horario puede estar asociado a varias programaciones.
   @ManyToMany(() => ProgramacionEntity, (programacion) => programacion.horario)
   programacion: ProgramacionEntity[];
 }

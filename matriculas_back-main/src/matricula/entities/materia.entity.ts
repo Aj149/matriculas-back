@@ -4,10 +4,10 @@ import {
   Column,
   ManyToMany,
   Entity,
-  OneToMany,
   CreateDateColumn,
   DeleteDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
 import { MatriculaEntity } from './matricula.entity';
 
@@ -21,6 +21,9 @@ export class MateriaEntity {
 
   @Column('varchar', { length: 50, nullable: false, unique: true })
   nombre: string;
+
+  @Column('varchar', { length: 50, nullable: true, unique: true })
+  abreviatura: string;
 
   @Column({
     name: 'is_active',
@@ -53,6 +56,13 @@ export class MateriaEntity {
   })
   deletedAt: Date;
 
+// 1relacion de muchos a muchos entre materias y matriculas
+
+  // @ManyToMany(() => MatriculaEntity, (matricula) => matricula.materias)
+  // matricula: MatriculaEntity[]
+
   @OneToMany(() => MatriculaEntity, (matricula) => matricula.materia)
   matricula: MatriculaEntity[];
 }
+
+

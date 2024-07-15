@@ -11,7 +11,8 @@ import { MateriaService } from './services/materias.service';
 import { Modalidad } from './enums/modalidad';
 import { HorarioEntity } from './entities/horario.entity';
 import { MatriculaEntity } from './entities/matricula.entity';
-
+import { CreateTurnoRotativoDto } from './dto/turnoRotativo/turno.dto';
+import { TurnoService } from './services/turno.service';
 
 @UsePipes(ValidationPipe)
 @Controller('matricula')
@@ -21,6 +22,7 @@ export class MatriculaController {
     private readonly aulaService: AulaService,
     private readonly horarioService: HorarioService,
     private readonly materiaService: MateriaService,
+    private readonly turnoService: TurnoService
     ) {}
 
   //Aulas
@@ -157,4 +159,33 @@ export class MatriculaController {
   remove(@Param('id') id: string) {
     return this.matriculaService.remove(+id);
   }
+
+  // 1turnosRotativos
+
+  @Post('turno')
+  createTurno(@Body() createTurnoRotativoDto: CreateTurnoRotativoDto) {
+    return this.turnoService.createTurno(createTurnoRotativoDto);
+  }
+
+  @Get('turno')
+  findAllTurno() {
+    return this.turnoService.buscarTurnos();
+  }
+
+  
+ @Get('turno/:id')
+ buscarUnTurno(@Param('id') id: any) {
+  return this.turnoService.buscarUnTurno(+id);
+ }
+
+ @Patch('turno/:id')
+ actualizarTurno(@Param('id') id: any, @Body() updateTurnoDto: CreateTurnoRotativoDto) {
+  return this.turnoService.actualizarTurno(+id, updateTurnoDto);
+ }
+
+ @Delete('turno/:id')
+ eliminarTurno(@Param('id') id:string){
+  return this.turnoService.eliminarTurno(+id);
+ }
+
 }

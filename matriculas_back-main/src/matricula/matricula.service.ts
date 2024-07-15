@@ -14,6 +14,7 @@ import { MessageDto } from 'src/common/message.dto';
 import { EstudianteEntity } from 'src/estudiante/entities/estudiante.entity';
 import { UsuarioEntity } from 'src/usuario/entities/usuario.entity';
 import { AulaEntity } from './entities/aula.entity';
+import { TurnoRotativoEntity } from './entities/turnoRotativo.entity';
 
 @Injectable()
 export class MatriculaService {
@@ -32,6 +33,8 @@ export class MatriculaService {
     private readonly usuarioRepository: Repository<UsuarioEntity>,
     @InjectRepository(AulaEntity)
     private readonly aulaRepository: Repository<AulaEntity>,
+    @InjectRepository(TurnoRotativoEntity)
+    private readonly turnoRotativoEntity: Repository<TurnoRotativoEntity>
   ) {}
 
 
@@ -40,6 +43,7 @@ export class MatriculaService {
       id_estudiante,
       id_usuario, //iria a la programacion de la matricula
       id_materia,
+      id_turno,
       programacion,
       ...matriculaData
     } = dto;
@@ -56,6 +60,9 @@ export class MatriculaService {
     const materia = await this.materiaRepository.findOne({
       where: { id_materia },
     });
+    const turno = await this.turnoRotativoEntity.findOne({
+      where: { id_turno },
+    })
     const horarios = await this.horarioRepository.findByIds(horario_id); //iria a la programacion de la matricula   
 
     switch (true) {
@@ -78,7 +85,14 @@ export class MatriculaService {
         throw new NotFoundException(
           'No existen horarios',
         ); //iria a la programacion de la matricula     
+      
+      case !turno:
+        throw new NotFoundException(
+          'No existen turnos',
+        ); 
       default:  
+      
+
     } 
 
     // Crear instancia de ProgramacionEntity
@@ -96,6 +110,7 @@ export class MatriculaService {
       alumno,
       profesor, //iria a la programacion de la matricula profesor one to many programacion 
       materia, // muchas materias que se matricula
+      turno,
       programacion: savedProgramacion, // esto sale se va a programacion
     });
  
@@ -128,7 +143,7 @@ export class MatriculaService {
 async getMatriculasByUsuario(id_usuario: number): Promise<MatriculaEntity[]> {
   const matriculas = await this.matriculaRepository.find({
     where: { profesor: { id_usuario } },
-    relations: ['alumno', 'materia', 'programacion', 'programacion.horario'],
+    relations: ['alumno', 'materia', 'programacion', 'programacion.horario', 'turno'],
   });
 
   if (!matriculas.length) {
@@ -180,7 +195,7 @@ async getHorariosByMatricula(idMatricula: number): Promise<HorarioEntity[]> {
   async findOne(id_matricula: number) {
     const matricula = await this.matriculaRepository.findOne({
       where: { id_matricula: id_matricula },
-      relations: ['alumno', 'profesor', 'materia', 'programacion', 'programacion.horario'],
+      relations: ['alumno', 'profesor', 'materia', 'programacion', 'programacion.horario', 'turno'],
     });
     if (!matricula) {
       throw new NotFoundException(new MessageDto('No existe la matricula'));
@@ -206,6 +221,7 @@ async getHorariosByMatricula(idMatricula: number): Promise<HorarioEntity[]> {
       id_estudiante,
       id_usuario,
       id_materia,
+      id_turno,
       programacion,
       ...matriculaData
     } = dto;
@@ -214,7 +230,7 @@ async getHorariosByMatricula(idMatricula: number): Promise<HorarioEntity[]> {
       // Obtener la matrícula a actualizar
       const matricula = await manager.findOne(MatriculaEntity, {
         where: { id_matricula },
-        relations: ['programacion', 'profesor', 'alumno', 'materia'],
+        relations: ['programacion', 'profesor', 'alumno', 'materia', 'turno'],
       });
 
       if (!matricula) {
@@ -230,6 +246,9 @@ async getHorariosByMatricula(idMatricula: number): Promise<HorarioEntity[]> {
       });
       const materia = await manager.findOne(MateriaEntity, {
         where: { id_materia },
+      }); 
+      const turno = await manager.findOne(TurnoRotativoEntity, {
+        where: { id_turno },
       }); 
 
       // Actualizar programación si existe
@@ -251,6 +270,7 @@ async getHorariosByMatricula(idMatricula: number): Promise<HorarioEntity[]> {
       matricula.alumno = alumno;
       matricula.profesor = profesor; 
       matricula.materia = materia;
+      matricula.turno = turno;
 
       // Aplicar otros datos de la matrícula
       Object.assign(matricula, matriculaData);

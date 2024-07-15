@@ -49,16 +49,23 @@ export class ProgramacionEntity {
   })
   deletedAt: Date;
 
+
+  //1 establece una relación compleja many-to-many con HorarioEntity, 
+  //1 La opción { eager: true } asegura que los 
+  //1 datos relacionados se carguen automáticamente cuando se accede al objeto 
+  //1 ProgramacionEntity, facilitando el desarrollo de consultas y operaciones 
+  //1 relacionales en tu aplicación.
   @ManyToMany(() => HorarioEntity, (horario) => horario.programacion,{
     eager: true,
   })
+
   @JoinTable({
-    name: 'programacion_horario',
-    joinColumn: { name: 'programacion_id' },
+    name: 'programacion_horario',  //1nombre de la tabla
+    joinColumn: { name: 'programacion_id' }, //1programacion_id es el nombre de la columna que almacena los ID de las instancias de ProgramacionEntity en la tabla de unión.
     inverseJoinColumn: { name: 'horario_id' },
   })
-  horario: HorarioEntity[]; 
+  horario: HorarioEntity[]; //1horario es una colección (o arreglo) que puede contener múltiples objetos de tipo HorarioEntity
 
   @OneToOne(() => MatriculaEntity, matricula => matricula.programacion)
-  matricula: MatriculaEntity;
+  matricula: MatriculaEntity; //1relacion uno a uno entre la tabla programcion y matricula
 }

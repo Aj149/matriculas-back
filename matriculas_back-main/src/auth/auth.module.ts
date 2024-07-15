@@ -12,9 +12,10 @@ import { UsuarioEntity } from 'src/usuario/entities/usuario.entity';
 import { HorarioEntity } from 'src/matricula/entities/horario.entity';
 import { EstudianteEntity } from 'src/estudiante/entities/estudiante.entity';
 import { MateriaEntity } from 'src/matricula/entities/materia.entity';
+import { TurnoRotativoEntity } from 'src/matricula/entities/turnoRotativo.entity';
 @Module({
   imports: [
-    TypeOrmModule.forFeature([UsuarioEntity, RolEntity, HorarioEntity, EstudianteEntity, MateriaEntity]),
+    TypeOrmModule.forFeature([UsuarioEntity, RolEntity, HorarioEntity, EstudianteEntity, MateriaEntity, TurnoRotativoEntity]),
     PassportModule.register({
       defaultStrategy: 'jwt',
     }),

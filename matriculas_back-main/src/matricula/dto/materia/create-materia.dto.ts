@@ -4,4 +4,5 @@ export class CreateMateriaDto {
    
     @IsString()
     nombre: string; 
+    abreviatura: string;
 }
